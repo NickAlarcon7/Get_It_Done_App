@@ -31,19 +31,32 @@ class TaskComposeViewController: UIViewController {
     {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [task.id])
         
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        let formattedDate = formatter.string(from: task.dueDate)
+        
         let content = UNMutableNotificationContent()
         content.title = "Task Reminder"
         content.subtitle = "Remember get this DONE"
-        content.body = "\(task.title) is due soon!"
+        content.body = "\(task.title) is due on \(formattedDate)!"
         content.sound = UNNotificationSound.default
         
         // Determine the time interval between now and the task's due date
-        let interval = task.dueDate.timeIntervalSinceNow
-        
-        // For now its scheduled 5 mins before its due
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(interval - 300, 1), repeats: false)
-        
-        let request = UNNotificationRequest(identifier: task.id, content: content, trigger: trigger)
+        let timeInterval = task.dueDate.timeIntervalSinceNow - (5 * 60) // 5 minutes before the due date
+            if timeInterval > 0 { // Make sure we're scheduling a notification in the future
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
+
+                // Create the request
+                let request = UNNotificationRequest(identifier: task.id, content: content, trigger: trigger)
+
+                // Schedule the request with the system
+                UNUserNotificationCenter.current().add(request) { error in
+                    if let error = error {
+                        print("Error scheduling notification: \(error)")
+                    }
+                }
+            }
     }
     
     
@@ -130,10 +143,9 @@ class TaskComposeViewController: UIViewController {
         }
         
         task.priority = priorityFromSegmentedControl()
-        
         // 5.
-        onComposeTask?(task)
         scheduleNotification(for: task)
+        onComposeTask?(task)
         // 6.
         dismiss(animated: true)
     }

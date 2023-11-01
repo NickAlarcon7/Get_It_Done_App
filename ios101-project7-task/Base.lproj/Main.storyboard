@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,9 +37,10 @@
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5q-Xc-mzZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="54.666666666666664" height="27.333333333333332"/>
-                                                                    <color key="tintColor" systemColor="tertiaryLabelColor"/>
+                                                                    <color key="tintColor" red="0.19783231130000001" green="0.3973145528" blue="0.66655252009999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="circle" catalog="system">
+                                                                    <state key="normal">
+                                                                        <imageReference key="image" image="circle" catalog="system" variableValue="1"/>
                                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                                     </state>
                                                                     <state key="selected" image="circle.inset.filled" catalog="system"/>
@@ -76,15 +78,30 @@
                                                         <constraint firstItem="Wr8-hC-1ao" firstAttribute="leading" secondItem="3hR-MB-ER4" secondAttribute="leading" constant="64.666666666666657" id="baK-Ur-r84"/>
                                                     </constraints>
                                                 </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68F-aj-nBC">
+                                                    <rect key="frame" x="378" y="11" width="67" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="4qG-6k-uRh"/>
+                                                        <constraint firstAttribute="width" constant="67" id="Uhk-cA-TYQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3hR-MB-ER4" firstAttribute="leading" secondItem="BXc-Af-m5v" secondAttribute="leadingMargin" id="J6z-4i-TOf"/>
+                                                <constraint firstItem="3hR-MB-ER4" firstAttribute="top" secondItem="68F-aj-nBC" secondAttribute="top" id="ZwK-5f-Lzf"/>
                                                 <constraint firstItem="3hR-MB-ER4" firstAttribute="top" secondItem="BXc-Af-m5v" secondAttribute="topMargin" id="gVh-d2-zgc"/>
+                                                <constraint firstItem="68F-aj-nBC" firstAttribute="leading" secondItem="3hR-MB-ER4" secondAttribute="trailing" constant="8" symbolic="YES" id="kuk-UT-Erw"/>
+                                                <constraint firstAttribute="trailing" secondItem="68F-aj-nBC" secondAttribute="trailing" id="va7-P5-Rol"/>
                                                 <constraint firstItem="3hR-MB-ER4" firstAttribute="bottom" secondItem="BXc-Af-m5v" secondAttribute="bottomMargin" id="xs3-pi-kZ8"/>
+                                                <constraint firstAttribute="trailing" secondItem="68F-aj-nBC" secondAttribute="trailing" id="zHe-E8-0K7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="completeButton" destination="z5q-Xc-mzZ" id="x9f-cU-BwA"/>
+                                            <outlet property="dueTimeLabel" destination="68F-aj-nBC" id="BvC-x5-Brp"/>
                                             <outlet property="noteLabel" destination="hvt-eI-7x7" id="kFw-UR-oJp"/>
                                             <outlet property="priorityLabel" destination="JPi-yk-0wC" id="gIb-dU-7Ow"/>
                                             <outlet property="titleLabel" destination="rY4-bn-3Uz" id="n87-9u-kGx"/>
@@ -92,7 +109,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the &quot;+&quot; button to add tasks" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9An-t6-Ghh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the &quot;+&quot; button to add tasks" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9An-t6-Ghh">
                                 <rect key="frame" x="48" y="407" width="334" height="118"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <color key="textColor" systemColor="tertiaryLabelColor"/>
@@ -128,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2866.1538461538462" y="-715.16587677725113"/>
+            <point key="canvasLocation" x="2866.046511627907" y="-715.23605150214598"/>
         </scene>
         <!--Tasks-->
         <scene sceneID="J7Q-nV-HWx">
@@ -232,11 +249,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="New Task" id="vWC-DD-cn2">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="fmg-4p-f0B">
+                            <color key="tintColor" red="0.19783231130000001" green="0.3973145528" blue="0.66655252009999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <action selector="didTapCancelButton:" destination="fZK-XV-ZSw" id="tc2-q5-u9F"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="oxE-u5-MuP">
+                            <color key="tintColor" red="0.19783231130000001" green="0.3973145528" blue="0.66655252009999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <action selector="didTapDoneButton:" destination="fZK-XV-ZSw" id="2zz-5T-Uoy"/>
                             </connections>
@@ -302,6 +321,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.19783231130000001" green="0.3973145528" blue="0.66655252009999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="selectedImageTintColor" red="0.19783231130000001" green="0.3973145528" blue="0.66655252009999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBar>
                     <connections>
                         <segue destination="Wg7-xV-89h" kind="relationship" relationship="viewControllers" id="Ozy-ha-xyw"/>

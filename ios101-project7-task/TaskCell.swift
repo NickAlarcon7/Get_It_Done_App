@@ -12,6 +12,7 @@ class TaskCell: UITableViewCell {
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var priorityLabel: UILabel!
     @IBOutlet weak var calendarPriorityLabel: UILabel!
+    @IBOutlet weak var dueTimeLabel: UILabel!
     
     // The closure called, passing in the associated task, when the "Complete" button is tapped.
     var onCompleteButtonTapped: ((Task) -> Void)?
@@ -38,6 +39,13 @@ class TaskCell: UITableViewCell {
     // 3. Update the UI for the given task
     func configure(with task: Task, onCompleteButtonTapped: ((Task) -> Void)?) 
     {
+        // 1.
+        self.task = task
+        // 2.
+        self.onCompleteButtonTapped = onCompleteButtonTapped
+        // 3.
+        
+        update(with: task)
         
         switch task.priority
         {
@@ -59,15 +67,31 @@ class TaskCell: UITableViewCell {
               calendarPriorityLabel?.textColor = .green
           }
         
+        dueTimeLabel?.text = task.formattedDueTime
         
-        // 1.
-        self.task = task
-        // 2.
-        self.onCompleteButtonTapped = onCompleteButtonTapped
-        // 3.
+        // Color logic
+        let timeRemaining = task.dueDate.timeIntervalSinceNow
+        let oneHour: TimeInterval = 60 * 60
+        let fourHours: TimeInterval = oneHour * 4
         
-    
-        update(with: task)
+        if task.isComplete{
+            dueTimeLabel?.textColor = .gray
+            priorityLabel?.textColor = .gray
+        }
+        else if timeRemaining <= oneHour{
+            dueTimeLabel?.textColor = .red
+        }
+        else if timeRemaining <= fourHours{
+            dueTimeLabel?.textColor = .orange
+        }
+        else
+        {
+            dueTimeLabel?.textColor = .green
+        }
+        
+        completeButton.tintColor = UIColor(named: "VeryNiceBlue")
+        
+        
     }
 
     // Update the UI for the given task
@@ -95,4 +119,13 @@ class TaskCell: UITableViewCell {
     // This is just a design / UI polish for this particular use case. Since we also have the "Completed" button in the row, it looks kinda weird if the whole cell darkens during selection.
     override func setSelected(_ selected: Bool, animated: Bool) { }
     override func setHighlighted(_ highlighted: Bool, animated: Bool) { }
+}
+
+extension Task{
+    var formattedDueTime: String{
+        // Format and return the due time as a string
+        let dateFromatter = DateFormatter()
+        dateFromatter.timeStyle = .short
+        return dateFromatter.string(from: self.dueDate)
+    }
 }
