@@ -3,12 +3,50 @@
 //
 
 import UIKit
+import UserNotifications
 
 class TaskComposeViewController: UIViewController {
 
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var noteField: UITextField!
 
+    @IBOutlet weak var prioritySegmentedControl: UISegmentedControl!
+    
+    func priorityFromSegmentedControl() -> Priority
+    {
+        switch prioritySegmentedControl.selectedSegmentIndex
+        {
+            case 0:
+                return .low
+            case 1:
+                return .medium
+            case 2:
+                return .high
+            default:
+                return .low
+        }
+    }
+    
+    private func scheduleNotification(for task: Task)
+    {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [task.id])
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Task Reminder"
+        content.subtitle = "Remember get this DONE"
+        content.body = "\(task.title) is due soon!"
+        content.sound = UNNotificationSound.default
+        
+        // Determine the time interval between now and the task's due date
+        let interval = task.dueDate.timeIntervalSinceNow
+        
+        // For now its scheduled 5 mins before its due
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(interval - 300, 1), repeats: false)
+        
+        let request = UNNotificationRequest(identifier: task.id, content: content, trigger: trigger)
+    }
+    
+    
     // A UI element that allows users to pick a date.
     @IBOutlet weak var datePicker: UIDatePicker!
 
@@ -34,6 +72,16 @@ class TaskComposeViewController: UIViewController {
             titleField.text = task.title
             noteField.text = task.note
             datePicker.date = task.dueDate
+            
+            switch task.priority
+            {
+            case.low:
+                prioritySegmentedControl.selectedSegmentIndex = 0
+            case .medium:
+                prioritySegmentedControl.selectedSegmentIndex = 1
+            case .high:
+                prioritySegmentedControl.selectedSegmentIndex = 2
+            }
 
             // 2.
             self.title = "Edit Task"
@@ -51,7 +99,8 @@ class TaskComposeViewController: UIViewController {
     // 4. If NO "task to edit" is present, we're creating a new task. Set the task variable with a newly created task.
     // 5. Call the "onComposeTask" closure passing in the new or edited task.
     // 6. Dismiss the TaskComposeViewController.
-    @IBAction func didTapDoneButton(_ sender: Any) {
+    @IBAction func didTapDoneButton(_ sender: Any)
+    {
         // 1.
         guard let title = titleField.text,
               !title.isEmpty
@@ -71,14 +120,20 @@ class TaskComposeViewController: UIViewController {
             task.title = title
             task.note = noteField.text
             task.dueDate = datePicker.date
-        } else {
+        } 
+        else
+        {
             // 4.
             task = Task(title: title,
                         note: noteField.text,
                         dueDate: datePicker.date)
         }
+        
+        task.priority = priorityFromSegmentedControl()
+        
         // 5.
         onComposeTask?(task)
+        scheduleNotification(for: task)
         // 6.
         dismiss(animated: true)
     }

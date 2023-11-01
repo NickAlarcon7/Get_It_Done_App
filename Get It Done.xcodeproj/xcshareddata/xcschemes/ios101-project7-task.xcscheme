@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CB602B9429247359006C6727"
-               BuildableName = "ios101-project7-task.app"
-               BlueprintName = "ios101-project7-task"
-               ReferencedContainer = "container:ios101-project7-task.xcodeproj">
+               BuildableName = "Get It Done.app"
+               BlueprintName = "Get It Done"
+               ReferencedContainer = "container:Get It Done.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CB602B9429247359006C6727"
-            BuildableName = "ios101-project7-task.app"
-            BlueprintName = "ios101-project7-task"
-            ReferencedContainer = "container:ios101-project7-task.xcodeproj">
+            BuildableName = "Get It Done.app"
+            BlueprintName = "Get It Done"
+            ReferencedContainer = "container:Get It Done.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CB602B9429247359006C6727"
-            BuildableName = "ios101-project7-task.app"
-            BlueprintName = "ios101-project7-task"
-            ReferencedContainer = "container:ios101-project7-task.xcodeproj">
+            BuildableName = "Get It Done.app"
+            BlueprintName = "Get It Done"
+            ReferencedContainer = "container:Get It Done.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

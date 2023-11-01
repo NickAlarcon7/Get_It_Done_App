@@ -4,9 +4,15 @@
 
 import UIKit
 
-// The Task model
-struct Task {
 
+private let tasksUserDefaultsKey = "com.tasksOfToday.tasks"
+
+// The Task model
+struct Task{
+    
+
+    var priority: Priority = .medium
+    
     // The task's title
     var title: String
 
@@ -44,26 +50,36 @@ struct Task {
 
     // The date the task was created
     // This property is set as the current date whenever the task is initially created.
-    let createdDate: Date = Date()
+    var createdDate: Date = Date()
 
     // An id (Universal Unique Identifier) used to identify a task.
-    let id: String = UUID().uuidString
+    var id: String = UUID().uuidString
 }
 
 // MARK: - Task + UserDefaults
-extension Task {
+extension Task: Codable {
 
 
     // Given an array of tasks, encodes them to data and saves to UserDefaults.
-    static func save(_ tasks: [Task]) {
-
-        // TODO: Save the array of tasks
+    static func save(_ tasks: [Task]) 
+    {
+        let encoder = JSONEncoder()
+        if let encodedTasks = try? encoder.encode(tasks)
+        {
+            UserDefaults.standard.set(encodedTasks, forKey: tasksUserDefaultsKey)
+        }
+        
     }
 
     // Retrieve an array of saved tasks from UserDefaults.
     static func getTasks() -> [Task] {
         
-        // TODO: Get the array of saved tasks from UserDefaults
+        let decoder = JSONDecoder()
+        if let savedTasks = UserDefaults.standard.data(forKey: tasksUserDefaultsKey),
+           let loadedTasks = try? decoder.decode([Task].self, from: savedTasks)
+        {
+            return loadedTasks
+        }
 
         return [] // 👈 replace with returned saved tasks
     }
@@ -71,6 +87,24 @@ extension Task {
     // Add a new task or update an existing task with the current task.
     func save() {
 
-        // TODO: Save the current task
+        var tasks = Task.getTasks()
+        
+        if let existingTaskindex = tasks.firstIndex(where: { $0.id == self.id})
+        {
+            tasks.remove(at: existingTaskindex)
+            tasks.insert(self, at: existingTaskindex)
+        }
+        else
+        {
+            tasks.append(self)
+        }
+        Task.save(tasks)
     }
+}
+
+enum Priority: Int, Codable 
+{
+    case high = 3
+    case medium = 2
+    case low = 1
 }

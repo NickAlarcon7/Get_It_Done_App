@@ -139,18 +139,22 @@ class CalendarViewController: UIViewController {
     // 4. Create an array of the task due dates by mapping each task to it's due date property.
     // 5. Create an array of DateComponents from the due dates array.
     // 6. Remove any duplicate date components. There will be multiple date components if there are multiple tasks with the same due date.
-    //    - ⚠️ We'll use these date components to reload the calendar view and it expects all dates to be unique or else...crash 💥
     // 7. Reload the calendar view's date decorations for all of the task due date components.
     // 8. Reload the table view with animation.
     private func refreshTasks() {
         // 1.
         tasks = Task.getTasks()
         // 2.
-        tasks.sort { lhs, rhs in
+        tasks.sort { (lhs: Task, rhs: Task) -> Bool in
             if lhs.isComplete && rhs.isComplete {
                 return lhs.completedDate! < rhs.completedDate!
             } else if !lhs.isComplete && !rhs.isComplete {
-                return lhs.createdDate < rhs.createdDate
+                if lhs.priority == rhs.priority{
+                    return lhs.createdDate < rhs.createdDate
+                }else
+                {
+                    return lhs.priority.rawValue > rhs.priority.rawValue
+                }
             } else {
                 return !lhs.isComplete && rhs.isComplete
             }
@@ -252,6 +256,7 @@ extension CalendarViewController: UITableViewDataSource {
     // 4. Return the configured cell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 1.
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskCell
         // 2.
         let task = selectedTasks[indexPath.row]
@@ -262,6 +267,7 @@ extension CalendarViewController: UITableViewDataSource {
             // ii.
             self?.refreshTasks()
         }
+        
         // 4.
         return cell
     }

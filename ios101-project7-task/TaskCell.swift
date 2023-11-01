@@ -10,7 +10,9 @@ class TaskCell: UITableViewCell {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var noteLabel: UILabel!
-
+    @IBOutlet weak var priorityLabel: UILabel!
+    @IBOutlet weak var calendarPriorityLabel: UILabel!
+    
     // The closure called, passing in the associated task, when the "Complete" button is tapped.
     var onCompleteButtonTapped: ((Task) -> Void)?
 
@@ -34,12 +36,37 @@ class TaskCell: UITableViewCell {
     // 1. Set the main task property
     // 2. Set the onCompleteButtonTapped closure
     // 3. Update the UI for the given task
-    func configure(with task: Task, onCompleteButtonTapped: ((Task) -> Void)?) {
+    func configure(with task: Task, onCompleteButtonTapped: ((Task) -> Void)?) 
+    {
+        
+        switch task.priority
+        {
+          case .high:
+              priorityLabel?.text = "High"
+              priorityLabel?.textColor = .red
+              calendarPriorityLabel?.text = "High"
+              calendarPriorityLabel?.textColor = .red
+            
+          case .medium:
+              priorityLabel?.text = "Medium"
+              priorityLabel?.textColor = .orange
+              calendarPriorityLabel?.text = "Medium"
+              calendarPriorityLabel?.textColor = .orange
+          case .low:
+              priorityLabel?.text = "Low"
+              priorityLabel?.textColor = .green
+              calendarPriorityLabel?.text = "Low"
+              calendarPriorityLabel?.textColor = .green
+          }
+        
+        
         // 1.
         self.task = task
         // 2.
         self.onCompleteButtonTapped = onCompleteButtonTapped
         // 3.
+        
+    
         update(with: task)
     }
 

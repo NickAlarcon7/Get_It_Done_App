@@ -94,13 +94,17 @@ class TaskListViewController: UIViewController {
         // 1.
         var tasks = Task.getTasks()
         // 2.
-        tasks.sort { lhs, rhs in
+        tasks.sort { (lhs: Task, rhs: Task) -> Bool in
             if lhs.isComplete && rhs.isComplete {
                 // i.
                 return lhs.completedDate! < rhs.completedDate!
             } else if !lhs.isComplete && !rhs.isComplete {
                 // ii.
-                return lhs.createdDate < rhs.createdDate
+                if lhs.priority == rhs.priority{
+                    return lhs.createdDate < rhs.createdDate
+                }
+                
+                return lhs.priority.rawValue > rhs.priority.rawValue
             } else {
                 // iii.
                 return !lhs.isComplete && rhs.isComplete
