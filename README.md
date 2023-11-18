@@ -1,8 +1,8 @@
-# Project 7 - *Get It Done*
+# ***Get It Done*** - *A Simple TODO List app*
 
-Submitted by: **Nick Alarcon**
+Author: **Nick Alarcon**
 
-**Get It Done** is an app that ... [TODO] 
+**Get It Done** is an app that:
 
 - Allows users to create and update tasks and are saved to User defaults(local storage)
 - User can add a title, description and due date and time for task, as well as priority
@@ -11,11 +11,9 @@ Submitted by: **Nick Alarcon**
 - Allows user to view task by date in calendar view and mark them done, and also view priority
 - Sends a user notification (if user accepts notifications) about any given task due in 5 mins
 
-Time spent: **12** hours spent in total
+## Implemented Features
 
-## Required Features
-
-The following **required** functionality is completed:
+The following functionality is complete:
 
 - [x] App displays a list of tasks
 - [x] Users can add tasks to the list
@@ -25,7 +23,7 @@ The following **required** functionality is completed:
 - [x] Users have a calendar view via navigation controller that displays tasks    
 
 
-The following **additional** features are implemented:
+The following features have been implemented (11/5/2023):
 
 - [x] Tasks can be toggled completed
 - [x] User can edit tasks by tapping on the task in the feed view
